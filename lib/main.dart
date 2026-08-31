@@ -13,6 +13,17 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  buildAppOverlayStyle(bool escuro) {
+    return escuro
+        ? SystemUiOverlayStyle.light.copyWith(
+            systemNavigationBarColor: Colors.black,
+            systemNavigationBarIconBrightness: Brightness.light,
+          )
+        : SystemUiOverlayStyle.dark.copyWith(
+            systemNavigationBarColor: Colors.white,
+            systemNavigationBarIconBrightness: Brightness.dark,
+          );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +41,15 @@ class MyApp extends StatelessWidget {
                   child: MaterialApp(
                     title: 'Mente Viva',
                     debugShowCheckedModeBanner: false,
-                    theme: buildAppTheme(
-                      escuro: escuro,
-                      escalaFonte: escala,
-                      tipoFonte: fonte,
-                    ),
+                    theme: buildAppTheme(escuro: escuro, tipoFonte: fonte),
+                    builder: (context, child) {
+                      return MediaQuery(
+                        data: MediaQuery.of(
+                          context,
+                        ).copyWith(textScaler: TextScaler.linear(escala)),
+                        child: child!,
+                      );
+                    },
                     home: const LoadingScreen(),
                   ),
                 );
