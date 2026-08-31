@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-ThemeData buildAppTheme({
-  required bool escuro,
-  required double escalaFonte,
-  required String tipoFonte,
-}) {
+// core/theme.dart
+ThemeData buildAppTheme({required bool escuro, required String tipoFonte}) {
   TextTheme base = ThemeData.light().textTheme;
   if (tipoFonte == 'Serif') {
     base = GoogleFonts.merriweatherTextTheme(base);
@@ -17,14 +14,6 @@ ThemeData buildAppTheme({
   return ThemeData(
     brightness: escuro ? Brightness.dark : Brightness.light,
     colorSchemeSeed: const Color(0xFF1848B0),
-    textTheme: base.apply(fontSizeFactor: escalaFonte),
-  );
-}
-
-SystemUiOverlayStyle buildAppOverlayStyle(bool escuro) {
-  return SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: escuro ? Brightness.light : Brightness.dark,
-    systemNavigationBarColor: Colors.transparent,
+    textTheme: base, // sem .apply(fontSizeFactor: ...)
   );
 }
