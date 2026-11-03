@@ -10,5 +10,14 @@ void main() {
 
     expect(find.text('Mente Viva'), findsOneWidget);
     expect(find.text('CARREGANDO...'), findsOneWidget);
+
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pumpAndSettle();
+    expect(find.text('Quem está usando o aplicativo?'), findsOneWidget);
+
+    await tester.tap(find.text('Pessoa Assistida'));
+    await tester.pumpAndSettle();
+    expect(find.text('Início'), findsWidgets);
+    expect(find.text('Lembretes'), findsWidgets);
   });
 }
